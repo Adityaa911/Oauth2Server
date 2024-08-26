@@ -1,16 +1,20 @@
 package org.example.oauth2server.Controllers;
 
+import lombok.NoArgsConstructor;
 import org.example.oauth2server.Dtos.*;
 import org.example.oauth2server.Models.Tokens;
 import org.example.oauth2server.Models.User;
 import org.example.oauth2server.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@NoArgsConstructor
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
 
     private UserService userService;
 

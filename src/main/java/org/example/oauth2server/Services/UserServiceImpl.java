@@ -23,10 +23,10 @@ public class UserServiceImpl implements UserService{
     private UserRepository userRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
     private TokenRepository tokenRepository;
-    private KafkaTemplate<String,String> kafkaTemplate;
+    private KafkaTemplate kafkaTemplate;
 
 
-    UserServiceImpl(ObjectMapper objectMapper,KafkaTemplate<String,String> kafkaTemplate,TokenRepository tokenRepository,UserRepository userRepository,BCryptPasswordEncoder bCryptPasswordEncoder){
+    UserServiceImpl(ObjectMapper objectMapper,KafkaTemplate kafkaTemplate,TokenRepository tokenRepository,UserRepository userRepository,BCryptPasswordEncoder bCryptPasswordEncoder){
         this.userRepository=userRepository;
         this.bCryptPasswordEncoder=bCryptPasswordEncoder;
         this.tokenRepository=tokenRepository;
@@ -113,7 +113,7 @@ public class UserServiceImpl implements UserService{
 
     @Override
     public User ValidateToken(String token) {
-        Optional<Tokens> tokensOptional =tokenRepository.findByvalueandisDeleteAndAndExpiryAtGreaterThan(
+        Optional<Tokens> tokensOptional =tokenRepository.findByTokenvalueandisDeletedAndExpiryAtGreaterThan(
                 token,
                 false,
                 new Date()
@@ -131,7 +131,7 @@ public class UserServiceImpl implements UserService{
     @Override
     public void Logout(String token) {
      Optional<Tokens> optionalToken;
-        optionalToken = tokenRepository.findByValueandisDelete(token,false);
+        optionalToken = tokenRepository.findByTokenvalueAndDeleted(token,false);
 
         if(optionalToken.isEmpty()){
 

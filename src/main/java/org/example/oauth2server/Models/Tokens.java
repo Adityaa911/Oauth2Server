@@ -1,9 +1,11 @@
 package org.example.oauth2server.Models;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import java.util.Date;
 
@@ -13,7 +15,7 @@ import java.util.Date;
 public class Tokens extends BaseModel {
 
     private String tokenvalue;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.PERSIST)
     private User user;
     private Date expiryAt;
 }

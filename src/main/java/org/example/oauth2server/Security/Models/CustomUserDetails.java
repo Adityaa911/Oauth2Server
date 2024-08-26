@@ -1,5 +1,6 @@
 package org.example.oauth2server.Security.Models;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.example.oauth2server.Models.Roles;
 import org.example.oauth2server.Models.User;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@JsonDeserialize
 public class CustomUserDetails implements UserDetails {
 
     private List<GrantedAuthority> grantedAuthorities;
@@ -26,14 +28,14 @@ public class CustomUserDetails implements UserDetails {
        this.isAccountNonExpired=true;
        this.isAccountNonLocked=true;
        this.isCredentialsNonExpired=true;
-
        this.grantedAuthorities =new ArrayList<>();
 
-       for(Roles roles : grantedAuthorities){
-           grantedAuthorities.add(new CustomGrantAuthority(roles));
+       for (Roles roles : user.getRoles()){
+           this.grantedAuthorities.add(new CustomGrantAuthority(roles));
        }
-   }
+       }
 
+      public CustomUserDetails(){}
 
 
     @Override
